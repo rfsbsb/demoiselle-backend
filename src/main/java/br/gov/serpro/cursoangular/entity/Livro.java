@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 public class Livro implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = SEQUENCE)
@@ -22,15 +22,18 @@ public class Livro implements Serializable {
 
     private Integer paginas;
 
+    private String resumo;
+
     @OneToOne
     private Autor autor;
 
     public Livro() {
     }
 
-    public Livro(String titulo, Integer paginas, Autor autor) {
+    public Livro(String titulo, Integer paginas, String resumo, Autor autor) {
         this.titulo = titulo;
         this.paginas = paginas;
+        this.resumo = resumo;
         this.autor = autor;
     }
 
@@ -89,5 +92,13 @@ public class Livro implements Serializable {
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+    }
+
+    public String getResumo() {
+        return resumo;
+    }
+
+    public void setResumo(String resumo) {
+        this.resumo = resumo;
     }
 }

@@ -22,11 +22,16 @@ public class Autor implements Serializable{
     @Size(min = 1, message = "{required.field}")
     private String nome;
 
+    @NotNull
+    @Size(min = 1, message = "{required.field}")
+    private String nacionalidade;
+
     public Autor() {
     }
 
-    public Autor(String nome) {
+    public Autor(String nome, String nacionalidade) {
         this.nome = nome;
+        this.nacionalidade = nacionalidade;
     }
 
     public Long getId() {
@@ -68,5 +73,13 @@ public class Autor implements Serializable{
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public String getNacionalidade() {
+        return nacionalidade;
+    }
+
+    public void setNacionalidade(String nacionalidade) {
+        this.nacionalidade = nacionalidade;
     }
 }

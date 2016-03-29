@@ -4,9 +4,7 @@ import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.cursoangular.entity.Autor;
-import br.gov.serpro.cursoangular.entity.Livro;
 import br.gov.serpro.cursoangular.persistence.AutorDAO;
-import br.gov.serpro.cursoangular.persistence.LivroDAO;
 
 import java.util.List;
 
@@ -16,8 +14,8 @@ public class AutorBC extends DelegateCrud<Autor, Long, AutorDAO> {
     @Transactional
     public void load() {
         if (findAll().isEmpty()) {
-            insert(new Autor("Julio Verne"));
-            insert(new Autor("J.R.R Tolkien"));
+            insert(new Autor("Julio Verne", "França"));
+            insert(new Autor("J.R.R Tolkien", "África do Sul"));
         }
     }
 
@@ -35,7 +33,10 @@ public class AutorBC extends DelegateCrud<Autor, Long, AutorDAO> {
                 return getDelegate().insert(autor);
             }
         } else {
-            return getDelegate().update(autor);
+            if (autor.getNome() != null && !autor.getNome().isEmpty() && autor.getNacionalidade() != null && !autor.getNacionalidade().isEmpty()) {
+                return getDelegate().update(autor);
+            }
+            return load(autor.getId());
         }
 
     }
