@@ -69,7 +69,7 @@ public class AutorREST {
     @Produces("application/json")
     @Consumes("application/json")
     public void update(@PathParam("id") Long id, Autor autor) throws Exception {
-        checkId(autor);
+//        checkId(autor);
         load(id);
 
         autor.setId(id);

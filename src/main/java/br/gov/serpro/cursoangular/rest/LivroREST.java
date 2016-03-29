@@ -70,7 +70,7 @@ public class LivroREST {
     @Produces("application/json")
     @Consumes("application/json")
     public void update(@PathParam("id") Long id, Livro livro) throws Exception {
-        checkId(livro);
+//        checkId(livro);
         load(id);
 
         livro.setId(id);
