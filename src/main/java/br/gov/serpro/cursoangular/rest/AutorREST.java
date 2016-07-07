@@ -7,6 +7,9 @@ import br.gov.frameworkdemoiselle.util.Strings;
 import br.gov.frameworkdemoiselle.util.ValidatePayload;
 import br.gov.serpro.cursoangular.business.AutorBC;
 import br.gov.serpro.cursoangular.entity.Autor;
+import br.gov.serpro.cursoangular.entity.mixins.AutorMixin;
+import org.codehaus.jackson.map.ObjectMapper;
+
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -38,14 +41,17 @@ public class AutorREST {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Autor load(@PathParam("id") Long id) throws Exception {
+    public String load(@PathParam("id") Long id) throws Exception {
         Autor result = bc.load(id);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        objectMapper.getSerializationConfig().addMixInAnnotations(Autor.class, AutorMixin.class);
 
         if (result == null) {
             throw new NotFoundException();
         }
 
-        return result;
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
     }
 
     @POST
